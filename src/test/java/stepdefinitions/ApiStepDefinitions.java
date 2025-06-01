@@ -4,6 +4,8 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 
+import org.junit.Assert;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
@@ -51,14 +53,13 @@ public class ApiStepDefinitions {
 
     @Then("the response should contain valid customer, payment, and product information")
     public void validate_post_response() {
-    	response.then().log().body()
-        .body("request.body.customer.name", equalTo("Jane Smith"))
-        .body("request.body.customer.email", equalTo("janesmith@example.com"))
-        .body("request.body.items[0].name", equalTo("Wireless Headphones"))
-        .body("request.body.items[1].name", equalTo("Smartphone Case"))
-        .body("request.body.payment.method", equalTo("credit_card"))
-        .body("request.body.order_status", equalTo("processing"));
 
-
+        		response.then()
+                .body("parsedBody.customer.name", equalTo("Jane Smith"))
+                .body("parsedBody.customer.email", equalTo("janesmith@example.com"))
+                .body("parsedBody.items[0].name", equalTo("Wireless Headphones"))
+                .body("parsedBody.items[1].name", equalTo("Smartphone Case"))
+                .body("parsedBody.payment.method", equalTo("credit_card"))
+                .body("parsedBody.order_status", equalTo("processing"));
     }
 }
